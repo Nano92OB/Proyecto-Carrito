@@ -1,17 +1,23 @@
 const items = document.getElementById("items");
 const templateCard = document.getElementById("template-card").content;
 const fragment = document.createDocumentFragment();
+let carrito = {}
 
-document.addEventListener("DOMContentLoaded", () => {
+
+document.addEventListener("DOMContentLoaded", (e) => {
   fetchData();
 });
+
+items.addEventListener('click', (e) =>{
+  addCarrito(e)
+})
 
 const fetchData = async () => {
   const res = await fetch("api.json");
   const data = await res.json();
   // console.log(data)
   pintarCards(data);
-};
+} 
 
 const pintarCards = (data) => {
   //usamos forEach porque en el json estan dentro de un arreglo, cambiaria si fuera coleccion de objetos
@@ -25,3 +31,27 @@ const pintarCards = (data) => {
   });
   items.appendChild(fragment);
 };
+
+
+const addCarrito = e =>{
+  console.log(e.target)
+  console.log(e.target.classList.contains('btn-dark'))
+  if(e.target.classList.contains('btn-dark')){
+    setCarrito(e.target.parentElement)
+  }
+  e.stopPropagation()
+}
+
+const setCarrito = objeto => {
+  // console.log(item)
+  const producto = {
+      title: objeto.querySelector('h5').textContent,
+      precio: objeto.querySelector('p').textContent,
+      id: objeto.querySelector('.btn-dark').dataset.id,
+      cantidad: 1
+  }
+  if(carrito.hasOwnProperty(producto.id)){
+    producto.cantidad = carrito[producto.id] + 1
+  }
+  carrito[producto.id] = {...producto}
+}
