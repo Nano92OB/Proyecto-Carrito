@@ -1,7 +1,7 @@
 const cards = document.getElementById("cards");
 const items = document.getElementById('items')
 const footer = document.getElementById('footer')
-const templateCard = document.getElementById("template-card").content;
+const templateCard = document.getElementById("template-card").content
 const templateFooter = document.getElementById('template-footer').content
 const templateCarrito = document.getElementById('template-carrito').content
 const fragment = document.createDocumentFragment();
@@ -46,7 +46,7 @@ const addCarrito = e =>{
   console.log(e.target.classList.contains('btn-dark'))
   if(e.target.classList.contains('btn-dark')){
     setCarrito(e.target.parentElement)
-  }
+  } 
   e.stopPropagation()
 }
 
@@ -59,7 +59,7 @@ const setCarrito = objeto => {
       cantidad: 1
   }
   if(carrito.hasOwnProperty(producto.id)){
-    producto.cantidad = carrito[producto.id] + 1
+    producto.cantidad = carrito[producto.id].cantidad + 1
   }
   carrito[producto.id] = {...producto}
   pintarCarrito()
